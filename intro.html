@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Real-time Scoring with H2O Models &#8212; Productionalizing an H2O Model</title>
+    <title>Productionalizing H2O Models: Real-time Scoring &#8212; Productionalizing an H2O Model</title>
     
   <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
 
@@ -91,7 +91,7 @@
   <ul class="nav sidenav_l1">
  <li class="toctree-l1">
   <a class="reference internal" href="#">
-   Real-time Scoring with H2O Models
+   Productionalizing H2O Models: Real-time Scoring
   </a>
  </li>
 </ul>
@@ -213,8 +213,8 @@
         
               <div>
                 
-  <div class="section" id="real-time-scoring-with-h2o-models">
-<h1>Real-time Scoring with H2O Models<a class="headerlink" href="#real-time-scoring-with-h2o-models" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="productionalizing-h2o-models-real-time-scoring">
+<h1>Productionalizing H2O Models: Real-time Scoring<a class="headerlink" href="#productionalizing-h2o-models-real-time-scoring" title="Permalink to this headline">¶</a></h1>
 <p>This book provides a brief overview of the process of deploying an H2O model into a production application.</p>
 <p>H2O is an open-source platform for building machine learning models and training them in a distributed environment. H2O is written in Java, with APIs for Python and R.</p>
 <p>Although H2O models can score new observations both in a user-initialized H2O session itself and outside of a user-initialized H2O session using methods provided by the Python and/or R APIs, neither of these approaches is optimal for real-time scoring in production applications. The first approach depends on maintaining a running H2O session which is unlikely to be stable enough to meet production application SLAs. As far as I can tell, the second approach requires reloading the model into a new JVM for each scoring request which, for larger models, entails significant overhead that is unlikely to meet response-time SLAs for a production application.</p>

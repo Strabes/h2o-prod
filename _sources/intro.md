@@ -1,5 +1,5 @@
-Real-time Scoring with H2O Models
-=================================
+Productionalizing H2O Models: Real-time Scoring
+===============================================
 
 This book provides a brief overview of the process of deploying an H2O model into a production application.
 

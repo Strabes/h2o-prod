@@ -1,0 +1,1165 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3. Fit an H2O GBM on the Lending Club data &#8212; Productionalizing an H2O Model</title>
+    
+  <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.bfb7730f9caf2ec0b46a44615585038c.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.30270b6e4c972e43c488.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="4. Java Scoring Class" href="java.html" />
+    <link rel="prev" title="2. POM File" href="pom.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Productionalizing an H2O Model</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Real-time Scoring with H2O Models
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="maven.html">
+   1. Apache Maven
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pom.html">
+   2. POM File
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   3. Fit an H2O GBM on the Lending Club data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="java.html">
+   4. Java Scoring Class
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="build_app.html">
+   5. Build the App with Maven
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Score_LendingClub.html">
+   6. MOJO Scoring: Two Approaches
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/H2O_with_LendingClub.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/H2O_with_LendingClub.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/executablebooks/jupyter-book/blob/master/H2O_with_LendingClub.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#imports">
+   3.1. Imports
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#read-data-into-pandas-and-fix-date-columns">
+   3.2. Read data into pandas and fix date columns
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#split-into-train-and-test">
+   3.3. Split into train and test
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#verify-data-types">
+   3.4. Verify data types
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#make-sure-all-columns-are-of-the-correct-data-type">
+     3.4.1. Make sure all columns are of the correct data type
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#apply-null-null-na-nan-consistently">
+   3.5. Apply NULL/null/NA/NaN consistently
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="fit-an-h2o-gbm-on-the-lending-club-data">
+<h1><span class="section-number">3. </span>Fit an H2O GBM on the Lending Club data<a class="headerlink" href="#fit-an-h2o-gbm-on-the-lending-club-data" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="imports">
+<h2><span class="section-number">3.1. </span>Imports<a class="headerlink" href="#imports" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">random</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">pickle</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">feature_engine</span> <span class="kn">import</span> <span class="n">categorical_encoders</span> <span class="k">as</span> <span class="n">ce</span>
+<span class="kn">from</span> <span class="nn">feature_engine</span> <span class="kn">import</span> <span class="n">discretisers</span> <span class="k">as</span> <span class="n">dsc</span>
+<span class="kn">from</span> <span class="nn">feature_engine</span> <span class="kn">import</span> <span class="n">missing_data_imputers</span> <span class="k">as</span> <span class="n">mdi</span>
+<span class="kn">from</span> <span class="nn">feature_engine</span> <span class="kn">import</span> <span class="n">feature_selection</span> <span class="k">as</span> <span class="n">fs</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span> <span class="k">as</span> <span class="n">pipe</span>
+
+<span class="kn">import</span> <span class="nn">h2o</span>
+<span class="kn">from</span> <span class="nn">h2o.estimators</span> <span class="kn">import</span> <span class="n">H2OXGBoostEstimator</span><span class="p">,</span> <span class="n">H2OGradientBoostingEstimator</span>
+<span class="kn">from</span> <span class="nn">h2o.grid.grid_search</span> <span class="kn">import</span> <span class="n">H2OGridSearch</span>
+
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;display.max_columns&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="o">%</span><span class="k">matplotlib</span> inline
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="read-data-into-pandas-and-fix-date-columns">
+<h2><span class="section-number">3.2. </span>Read data into pandas and fix date columns<a class="headerlink" href="#read-data-into-pandas-and-fix-date-columns" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;../data/lending_club_loan_two.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Fix date columns:</span>
+<span class="n">dt_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;issue_d&#39;</span><span class="p">,</span><span class="s1">&#39;earliest_cr_line&#39;</span><span class="p">]</span>
+
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">dt_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">dt_cols</span><span class="p">]</span> \
+  <span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;null&#39;</span><span class="p">,</span><span class="s1">&#39;NULL&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span> \
+  <span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="nb">format</span> <span class="o">=</span> <span class="s2">&quot;%b-%Y&quot;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="split-into-train-and-test">
+<h2><span class="section-number">3.3. </span>Split into train and test<a class="headerlink" href="#split-into-train-and-test" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p_trn</span> <span class="o">=</span> <span class="mf">0.8</span>
+<span class="n">n</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="n">frac</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">random_state</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">p_trn</span><span class="p">),:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_test</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">p_trn</span><span class="p">):,:]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>loan_amnt</th>
+      <th>term</th>
+      <th>int_rate</th>
+      <th>installment</th>
+      <th>grade</th>
+      <th>sub_grade</th>
+      <th>emp_title</th>
+      <th>emp_length</th>
+      <th>home_ownership</th>
+      <th>annual_inc</th>
+      <th>verification_status</th>
+      <th>issue_d</th>
+      <th>loan_status</th>
+      <th>purpose</th>
+      <th>title</th>
+      <th>dti</th>
+      <th>earliest_cr_line</th>
+      <th>open_acc</th>
+      <th>pub_rec</th>
+      <th>revol_bal</th>
+      <th>revol_util</th>
+      <th>total_acc</th>
+      <th>initial_list_status</th>
+      <th>application_type</th>
+      <th>mort_acc</th>
+      <th>pub_rec_bankruptcies</th>
+      <th>address</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8000.0</td>
+      <td>36 months</td>
+      <td>16.20</td>
+      <td>282.05</td>
+      <td>C</td>
+      <td>C4</td>
+      <td>Counselor</td>
+      <td>7 years</td>
+      <td>RENT</td>
+      <td>50000.0</td>
+      <td>Verified</td>
+      <td>2013-10-01</td>
+      <td>Fully Paid</td>
+      <td>debt_consolidation</td>
+      <td>Consolidation loan</td>
+      <td>17.64</td>
+      <td>2000-11-01</td>
+      <td>13.0</td>
+      <td>1.0</td>
+      <td>9034.0</td>
+      <td>68.4</td>
+      <td>30.0</td>
+      <td>w</td>
+      <td>INDIVIDUAL</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>Unit 9587 Box 8878\r\nDPO AA 29597</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9000.0</td>
+      <td>36 months</td>
+      <td>14.33</td>
+      <td>309.05</td>
+      <td>C</td>
+      <td>C1</td>
+      <td>American Portfolios</td>
+      <td>4 years</td>
+      <td>RENT</td>
+      <td>40000.0</td>
+      <td>Not Verified</td>
+      <td>2012-09-01</td>
+      <td>Fully Paid</td>
+      <td>credit_card</td>
+      <td>CC Refinance Loan</td>
+      <td>15.87</td>
+      <td>1980-05-01</td>
+      <td>13.0</td>
+      <td>0.0</td>
+      <td>14593.0</td>
+      <td>71.2</td>
+      <td>30.0</td>
+      <td>f</td>
+      <td>INDIVIDUAL</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>314 Mercer Route\r\nWest Kathryn, TX 48052</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12000.0</td>
+      <td>60 months</td>
+      <td>12.49</td>
+      <td>269.92</td>
+      <td>B</td>
+      <td>B5</td>
+      <td>Senior Analyst</td>
+      <td>4 years</td>
+      <td>MORTGAGE</td>
+      <td>73000.0</td>
+      <td>Not Verified</td>
+      <td>2014-07-01</td>
+      <td>Fully Paid</td>
+      <td>credit_card</td>
+      <td>Credit card refinancing</td>
+      <td>28.63</td>
+      <td>2001-08-01</td>
+      <td>11.0</td>
+      <td>0.0</td>
+      <td>18633.0</td>
+      <td>62.1</td>
+      <td>60.0</td>
+      <td>w</td>
+      <td>INDIVIDUAL</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>5389 Brandi Springs\r\nAshleymouth, LA 29597</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20000.0</td>
+      <td>36 months</td>
+      <td>6.62</td>
+      <td>614.08</td>
+      <td>A</td>
+      <td>A2</td>
+      <td>QA Manager</td>
+      <td>9 years</td>
+      <td>MORTGAGE</td>
+      <td>110000.0</td>
+      <td>Source Verified</td>
+      <td>2013-12-01</td>
+      <td>Fully Paid</td>
+      <td>debt_consolidation</td>
+      <td>Debt Freedom</td>
+      <td>15.45</td>
+      <td>1993-10-01</td>
+      <td>8.0</td>
+      <td>0.0</td>
+      <td>5275.0</td>
+      <td>38.2</td>
+      <td>24.0</td>
+      <td>f</td>
+      <td>INDIVIDUAL</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>166 Lopez Key Apt. 864\r\nSouth Angelaland, CO...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>13600.0</td>
+      <td>36 months</td>
+      <td>7.29</td>
+      <td>421.74</td>
+      <td>A</td>
+      <td>A4</td>
+      <td>Caxton Associates</td>
+      <td>7 years</td>
+      <td>MORTGAGE</td>
+      <td>115000.0</td>
+      <td>Source Verified</td>
+      <td>2011-02-01</td>
+      <td>Fully Paid</td>
+      <td>home_improvement</td>
+      <td>Home Improvement Loan</td>
+      <td>6.84</td>
+      <td>1996-10-01</td>
+      <td>9.0</td>
+      <td>0.0</td>
+      <td>191.0</td>
+      <td>0.8</td>
+      <td>17.0</td>
+      <td>f</td>
+      <td>INDIVIDUAL</td>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>48033 Xavier Squares Suite 893\r\nSouth Rubenb...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</div>
+<div class="section" id="verify-data-types">
+<h2><span class="section-number">3.4. </span>Verify data types<a class="headerlink" href="#verify-data-types" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="make-sure-all-columns-are-of-the-correct-data-type">
+<h3><span class="section-number">3.4.1. </span>Make sure all columns are of the correct data type<a class="headerlink" href="#make-sure-all-columns-are-of-the-correct-data-type" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dtype_dict</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">dtypes</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">numeric_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">dtype_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+<span class="n">numeric_cols</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Numeric columns: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">numeric_cols</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Numeric columns: annual_inc, dti, installment, int_rate, loan_amnt, mort_acc, open_acc, pub_rec, pub_rec_bankruptcies, revol_bal, revol_util, total_acc
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">object_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">dtype_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_object_dtype</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+<span class="n">object_cols</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Object columns: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">object_cols</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Object columns: address, application_type, emp_length, emp_title, grade, home_ownership, initial_list_status, loan_status, purpose, sub_grade, term, title, verification_status
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">datetime_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">dtype_dict</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_datetime64_any_dtype</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+<span class="n">datetime_cols</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Datetime columns: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">datetime_cols</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Datetime columns: earliest_cr_line, issue_d
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">other_cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">numeric_cols</span> <span class="o">+</span> <span class="n">object_cols</span> <span class="o">+</span> <span class="n">datetime_cols</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Columns not accounted for: &quot;</span> <span class="o">+</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">other_cols</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Columns not accounted for: 
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="apply-null-null-na-nan-consistently">
+<h2><span class="section-number">3.5. </span>Apply NULL/null/NA/NaN consistently<a class="headerlink" href="#apply-null-null-na-nan-consistently" title="Permalink to this headline">¶</a></h2>
+<p>Different datesources may result in different formats for null/missing values. It’s typically a good idea to apply a consistent format. I’ll do this by replacing ‘NULL’, ‘null’ and ‘’ in character columns with <code class="docutils literal notranslate"><span class="pre">np.nan</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">object_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">object_cols</span><span class="p">]</span> \
+  <span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;null&#39;</span><span class="p">,</span><span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">target</span> <span class="o">=</span> <span class="s1">&#39;loan_status&#39;</span>
+
+<span class="n">object_cols_x_target</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">object_cols</span> <span class="k">if</span> <span class="n">c</span> <span class="o">!=</span> <span class="n">target</span><span class="p">]</span>
+
+<span class="n">cols_to_drop</span> <span class="o">=</span> <span class="n">datetime_cols</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;address&#39;</span><span class="p">]</span>
+
+<span class="n">p</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">([</span>
+    <span class="c1"># Add missing indicators for numeric features</span>
+    <span class="p">(</span><span class="s2">&quot;num_nan_ind&quot;</span><span class="p">,</span><span class="n">mdi</span><span class="o">.</span><span class="n">AddMissingIndicator</span><span class="p">(</span><span class="n">variables</span><span class="o">=</span><span class="n">numeric_cols</span><span class="p">)),</span>
+    <span class="c1"># Add missing level for categorical features</span>
+    <span class="p">(</span><span class="s2">&quot;fill_cat_nas&quot;</span><span class="p">,</span><span class="n">mdi</span><span class="o">.</span><span class="n">CategoricalVariableImputer</span><span class="p">(</span>
+        <span class="n">fill_value</span> <span class="o">=</span> <span class="s2">&quot;_MISSING_&quot;</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="n">object_cols_x_target</span><span class="p">)),</span>
+    <span class="c1"># Bin rare levels of categorical variables</span>
+    <span class="p">(</span><span class="s2">&quot;rare_cats&quot;</span><span class="p">,</span><span class="n">ce</span><span class="o">.</span><span class="n">RareLabelCategoricalEncoder</span><span class="p">(</span>
+        <span class="n">tol</span> <span class="o">=</span> <span class="mf">0.02</span><span class="p">,</span> <span class="n">replace_with</span> <span class="o">=</span> <span class="s2">&quot;_RARE_&quot;</span><span class="p">,</span> <span class="n">variables</span><span class="o">=</span><span class="n">object_cols_x_target</span><span class="p">)),</span>
+    <span class="c1"># Impute missing numeric variables with media</span>
+    <span class="p">(</span><span class="s2">&quot;rmmean&quot;</span><span class="p">,</span><span class="n">mdi</span><span class="o">.</span><span class="n">MeanMedianImputer</span><span class="p">(</span><span class="n">imputation_method</span> <span class="o">=</span> <span class="s1">&#39;median&#39;</span><span class="p">,</span><span class="n">variables</span><span class="o">=</span><span class="n">numeric_cols</span><span class="p">)),</span>
+    <span class="c1"># Drop dates and address columns</span>
+    <span class="p">(</span><span class="s2">&quot;drop_date&quot;</span><span class="p">,</span><span class="n">fs</span><span class="o">.</span><span class="n">DropFeatures</span><span class="p">(</span><span class="n">features_to_drop</span><span class="o">=</span><span class="n">cols_to_drop</span><span class="p">))])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train_prepped</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train_prepped</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>loan_amnt</th>
+      <th>term</th>
+      <th>int_rate</th>
+      <th>installment</th>
+      <th>grade</th>
+      <th>sub_grade</th>
+      <th>emp_title</th>
+      <th>emp_length</th>
+      <th>home_ownership</th>
+      <th>annual_inc</th>
+      <th>verification_status</th>
+      <th>loan_status</th>
+      <th>purpose</th>
+      <th>title</th>
+      <th>dti</th>
+      <th>open_acc</th>
+      <th>pub_rec</th>
+      <th>revol_bal</th>
+      <th>revol_util</th>
+      <th>total_acc</th>
+      <th>initial_list_status</th>
+      <th>application_type</th>
+      <th>mort_acc</th>
+      <th>pub_rec_bankruptcies</th>
+      <th>mort_acc_na</th>
+      <th>pub_rec_bankruptcies_na</th>
+      <th>revol_util_na</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>8000.0</td>
+      <td>36 months</td>
+      <td>16.20</td>
+      <td>282.05</td>
+      <td>C</td>
+      <td>C4</td>
+      <td>_RARE_</td>
+      <td>7 years</td>
+      <td>RENT</td>
+      <td>50000.0</td>
+      <td>Verified</td>
+      <td>Fully Paid</td>
+      <td>debt_consolidation</td>
+      <td>_RARE_</td>
+      <td>17.64</td>
+      <td>13.0</td>
+      <td>1.0</td>
+      <td>9034.0</td>
+      <td>68.4</td>
+      <td>30.0</td>
+      <td>w</td>
+      <td>INDIVIDUAL</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>9000.0</td>
+      <td>36 months</td>
+      <td>14.33</td>
+      <td>309.05</td>
+      <td>C</td>
+      <td>C1</td>
+      <td>_RARE_</td>
+      <td>4 years</td>
+      <td>RENT</td>
+      <td>40000.0</td>
+      <td>Not Verified</td>
+      <td>Fully Paid</td>
+      <td>credit_card</td>
+      <td>_RARE_</td>
+      <td>15.87</td>
+      <td>13.0</td>
+      <td>0.0</td>
+      <td>14593.0</td>
+      <td>71.2</td>
+      <td>30.0</td>
+      <td>f</td>
+      <td>INDIVIDUAL</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>12000.0</td>
+      <td>60 months</td>
+      <td>12.49</td>
+      <td>269.92</td>
+      <td>B</td>
+      <td>B5</td>
+      <td>_RARE_</td>
+      <td>4 years</td>
+      <td>MORTGAGE</td>
+      <td>73000.0</td>
+      <td>Not Verified</td>
+      <td>Fully Paid</td>
+      <td>credit_card</td>
+      <td>Credit card refinancing</td>
+      <td>28.63</td>
+      <td>11.0</td>
+      <td>0.0</td>
+      <td>18633.0</td>
+      <td>62.1</td>
+      <td>60.0</td>
+      <td>w</td>
+      <td>INDIVIDUAL</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>20000.0</td>
+      <td>36 months</td>
+      <td>6.62</td>
+      <td>614.08</td>
+      <td>A</td>
+      <td>A2</td>
+      <td>_RARE_</td>
+      <td>9 years</td>
+      <td>MORTGAGE</td>
+      <td>110000.0</td>
+      <td>Source Verified</td>
+      <td>Fully Paid</td>
+      <td>debt_consolidation</td>
+      <td>_RARE_</td>
+      <td>15.45</td>
+      <td>8.0</td>
+      <td>0.0</td>
+      <td>5275.0</td>
+      <td>38.2</td>
+      <td>24.0</td>
+      <td>f</td>
+      <td>INDIVIDUAL</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>13600.0</td>
+      <td>36 months</td>
+      <td>7.29</td>
+      <td>421.74</td>
+      <td>A</td>
+      <td>A4</td>
+      <td>_RARE_</td>
+      <td>7 years</td>
+      <td>MORTGAGE</td>
+      <td>115000.0</td>
+      <td>Source Verified</td>
+      <td>Fully Paid</td>
+      <td>home_improvement</td>
+      <td>_RARE_</td>
+      <td>6.84</td>
+      <td>9.0</td>
+      <td>0.0</td>
+      <td>191.0</td>
+      <td>0.8</td>
+      <td>17.0</td>
+      <td>f</td>
+      <td>INDIVIDUAL</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h2o</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checking whether there is an H2O instance running at http://localhost:54321 ..... not found.
+Attempting to start a local H2O server...
+; Java HotSpot(TM) 64-Bit Server VM (build 14.0.1+7, mixed mode, sharing)
+  Starting server from C:\Users\grego\Anaconda3\lib\site-packages\h2o\backend\bin\h2o.jar
+  Ice root: C:\Users\grego\AppData\Local\Temp\tmpw4huq5i4
+  JVM stdout: C:\Users\grego\AppData\Local\Temp\tmpw4huq5i4\h2o_grego_started_from_python.out
+  JVM stderr: C:\Users\grego\AppData\Local\Temp\tmpw4huq5i4\h2o_grego_started_from_python.err
+  Server is running at http://127.0.0.1:54321
+Connecting to H2O server at http://127.0.0.1:54321 ... successful.
+</pre></div>
+</div>
+<div class="output text_html"><div style="overflow:auto"><table style="width:50%"><tr><td>H2O_cluster_uptime:</td>
+<td>01 secs</td></tr>
+<tr><td>H2O_cluster_timezone:</td>
+<td>America/Denver</td></tr>
+<tr><td>H2O_data_parsing_timezone:</td>
+<td>UTC</td></tr>
+<tr><td>H2O_cluster_version:</td>
+<td>3.32.0.1</td></tr>
+<tr><td>H2O_cluster_version_age:</td>
+<td>2 months and 3 days </td></tr>
+<tr><td>H2O_cluster_name:</td>
+<td>H2O_from_python_grego_54uadn</td></tr>
+<tr><td>H2O_cluster_total_nodes:</td>
+<td>1</td></tr>
+<tr><td>H2O_cluster_free_memory:</td>
+<td>3.947 Gb</td></tr>
+<tr><td>H2O_cluster_total_cores:</td>
+<td>8</td></tr>
+<tr><td>H2O_cluster_allowed_cores:</td>
+<td>8</td></tr>
+<tr><td>H2O_cluster_status:</td>
+<td>accepting new members, healthy</td></tr>
+<tr><td>H2O_connection_url:</td>
+<td>http://127.0.0.1:54321</td></tr>
+<tr><td>H2O_connection_proxy:</td>
+<td>{"http": null, "https": null}</td></tr>
+<tr><td>H2O_internal_security:</td>
+<td>False</td></tr>
+<tr><td>H2O_API_Extensions:</td>
+<td>Amazon S3, Algos, AutoML, Core V3, TargetEncoder, Core V4</td></tr>
+<tr><td>Python_version:</td>
+<td>3.7.9 final</td></tr></table></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h2o_train</span> <span class="o">=</span> <span class="n">h2o</span><span class="o">.</span><span class="n">H2OFrame</span><span class="p">(</span><span class="n">df_train_prepped</span><span class="p">)</span>
+<span class="n">h2o_train</span><span class="p">[</span><span class="s1">&#39;loan_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h2o_train</span><span class="p">[</span><span class="s1">&#39;loan_status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">asfactor</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parse progress: |█████████████████████████████████████████████████████████| 100%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">predictors</span> <span class="o">=</span> <span class="n">df_train_prepped</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<span class="n">predictors</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s1">&#39;loan_status&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set up gbm parameter grid and fit in h2o</span>
+<span class="n">hyper_params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;ntrees&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">200</span><span class="p">],</span>
+    <span class="s1">&#39;max_depth&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span>
+    <span class="s1">&#39;learn_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">gbm</span> <span class="o">=</span> <span class="n">H2OGradientBoostingEstimator</span><span class="p">(</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;bernoulli&#39;</span><span class="p">,</span>
+    <span class="n">seed</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">h2o_train1</span><span class="p">,</span> <span class="n">h2o_train2</span> <span class="o">=</span> <span class="n">h2o_train</span><span class="o">.</span><span class="n">split_frame</span><span class="p">(</span>
+    <span class="n">ratios</span><span class="o">=</span><span class="p">[</span><span class="mf">0.8</span><span class="p">],</span>
+    <span class="n">seed</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">xgb_grid</span> <span class="o">=</span> <span class="n">H2OGridSearch</span><span class="p">(</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">gbm</span><span class="p">,</span>
+    <span class="n">hyper_params</span> <span class="o">=</span> <span class="n">hyper_params</span>
+<span class="p">)</span>
+
+<span class="n">xgb_grid</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+    <span class="n">training_frame</span> <span class="o">=</span> <span class="n">h2o_train1</span><span class="p">,</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;loan_status&#39;</span><span class="p">,</span>
+    <span class="n">validation_frame</span> <span class="o">=</span> <span class="n">h2o_train2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gbm Grid Build progress: |████████████████████████████████████████████████| 100%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">grid_results</span> <span class="o">=</span> <span class="n">xgb_grid</span><span class="o">.</span><span class="n">get_grid</span><span class="p">(</span>
+    <span class="n">sort_by</span><span class="o">=</span><span class="s2">&quot;logloss&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_params</span> <span class="o">=</span> <span class="n">grid_results</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">actual_params</span>
+<span class="n">best_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="n">k</span><span class="p">,</span><span class="n">best_params</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;ntrees&#39;</span><span class="p">,</span><span class="s1">&#39;max_depth&#39;</span><span class="p">,</span><span class="s1">&#39;learn_rate&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">best_params</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;ntrees&#39;: 200, &#39;max_depth&#39;: 4, &#39;learn_rate&#39;: 0.1}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_test_prepped</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">df_test</span><span class="p">)</span>
+
+<span class="n">h2o_test</span> <span class="o">=</span> <span class="n">h2o</span><span class="o">.</span><span class="n">H2OFrame</span><span class="p">(</span><span class="n">df_test_prepped</span><span class="p">)</span>
+<span class="n">h2o_test</span><span class="p">[</span><span class="s1">&#39;loan_status&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">h2o_test</span><span class="p">[</span><span class="s1">&#39;loan_status&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">asfactor</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Parse progress: |█████████████████████████████████████████████████████████| 100%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gbm</span> <span class="o">=</span> <span class="n">H2OGradientBoostingEstimator</span><span class="p">(</span>
+    <span class="n">distribution</span><span class="o">=</span><span class="s1">&#39;bernoulli&#39;</span><span class="p">,</span>
+    <span class="n">model_id</span> <span class="o">=</span> <span class="s1">&#39;final_gbm&#39;</span><span class="p">,</span>
+    <span class="o">**</span><span class="n">best_params</span><span class="p">,</span>
+    <span class="n">seed</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gbm</span><span class="o">.</span><span class="n">train</span><span class="p">(</span>
+<span class="n">training_frame</span> <span class="o">=</span> <span class="n">h2o_train</span><span class="p">,</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">predictors</span><span class="p">,</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;loan_status&#39;</span><span class="p">,</span>
+    <span class="n">validation_frame</span> <span class="o">=</span> <span class="n">h2o_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gbm Model Build progress: |███████████████████████████████████████████████| 100%
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#path = os.getcwd() + &#39;/lendingclub-app/src/main/resources/&#39;</span>
+<span class="c1">#if not os.path.exists(path):</span>
+<span class="c1">#    os.makedirs(path)</span>
+<span class="c1">#gbm.download_mojo(path=path, get_genmodel_jar=False)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gbm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">h2o_test</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">,:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>gbm prediction progress: |████████████████████████████████████████████████| 100%
+</pre></div>
+</div>
+<div class="output text_html"><table>
+<thead>
+<tr><th>predict    </th><th style="text-align: right;">  Charged Off</th><th style="text-align: right;">  Fully Paid</th></tr>
+</thead>
+<tbody>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.195452 </td><td style="text-align: right;">    0.804548</td></tr>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.109756 </td><td style="text-align: right;">    0.890244</td></tr>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.146885 </td><td style="text-align: right;">    0.853115</td></tr>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.534436 </td><td style="text-align: right;">    0.465564</td></tr>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.0735955</td><td style="text-align: right;">    0.926404</td></tr>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.12821  </td><td style="text-align: right;">    0.87179 </td></tr>
+<tr><td>Charged Off</td><td style="text-align: right;">    0.576497 </td><td style="text-align: right;">    0.423503</td></tr>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.0650109</td><td style="text-align: right;">    0.934989</td></tr>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.151643 </td><td style="text-align: right;">    0.848357</td></tr>
+<tr><td>Fully Paid </td><td style="text-align: right;">    0.0378637</td><td style="text-align: right;">    0.962136</td></tr>
+</tbody>
+</table></div><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_test</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;test_cases.pkl&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;pipeline.pkl&#39;</span><span class="p">,</span><span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">h2o</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="pom.html" title="previous page"><span class="section-number">2. </span>POM File</a>
+    <a class='right-next' id="next-link" href="java.html" title="next page"><span class="section-number">4. </span>Java Scoring Class</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Greg Strabel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.30270b6e4c972e43c488.js"></script>
+
+
+    
+  </body>
+</html>

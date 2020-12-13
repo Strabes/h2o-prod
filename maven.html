@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1. Apache Maven &#8212; Productionalizing an H2O Model</title>
+    
+  <link rel="stylesheet" href="_static/css/index.d431a4ee1c1efae0e38bdfebc22debff.css">
+
+    
+  <link rel="stylesheet"
+    href="_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="_static/sphinx-book-theme.bfb7730f9caf2ec0b46a44615585038c.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="_static/js/index.30270b6e4c972e43c488.js">
+
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
+    <script src="_static/togglebutton.js"></script>
+    <script src="_static/clipboard.min.js"></script>
+    <script src="_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="_static/sphinx-book-theme.be0a4a0c39cd630af62a2fcf693f3f06.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="2. POM File" href="pom.html" />
+    <link rel="prev" title="Real-time Scoring with H2O Models" href="intro.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="index.html">
+  
+  <img src="_static/logo.png" class="logo" alt="logo">
+  
+  
+  <h1 class="site-logo" id="site-title">Productionalizing an H2O Model</h1>
+  
+</a>
+</div>
+
+<form class="bd-search d-flex align-items-center" action="search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+  <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="intro.html">
+   Real-time Scoring with H2O Models
+  </a>
+ </li>
+</ul>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   1. Apache Maven
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="pom.html">
+   2. POM File
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="H2O_with_LendingClub.html">
+   3. Fit an H2O GBM on the Lending Club data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="java.html">
+   4. Java Scoring Class
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="build_app.html">
+   5. Build the App with Maven
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="Score_LendingClub.html">
+   6. MOJO Scoring: Two Approaches
+  </a>
+ </li>
+</ul>
+
+</nav>
+
+ <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        <div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="_sources/maven.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+    
+</div>
+        <!-- Source interaction buttons -->
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="apache-maven">
+<h1><span class="section-number">1. </span>Apache Maven<a class="headerlink" href="#apache-maven" title="Permalink to this headline">¶</a></h1>
+<p>Apache Maven is a build automation tool for Java applications. If you do not already have maven installed on your machine, you can download it <a class="reference external" href="https://maven.apache.org/download.cgi">here</a>.</p>
+<p>The first step in our project is to create a new, empty directory for our maven build. Having created this directory, open a terminal and <code class="docutils literal notranslate"><span class="pre">cd</span></code> into it.</p>
+<p>To initialize a new maven project, you will need:</p>
+<ol class="simple">
+<li><p>A <code class="docutils literal notranslate"><span class="pre">DgroupId</span></code>, which will serve as your package name. Since I will be building a model on the Lending Club data, I’ll choose <code class="docutils literal notranslate"><span class="pre">com.lendingclub.app</span></code>. If you work for <code class="docutils literal notranslate"><span class="pre">somecompany</span></code>, you will likely choose <code class="docutils literal notranslate"><span class="pre">com.somecompany.app</span></code>.</p></li>
+<li><p>A <code class="docutils literal notranslate"><span class="pre">DartifactId</span></code> - this is the root directory of your app. I’ll choose <code class="docutils literal notranslate"><span class="pre">lendingclub-app</span></code>.</p></li>
+</ol>
+<p>Now I’ll run the following maven command (from my project directory)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mvn</span> <span class="o">-</span><span class="n">B</span> <span class="n">archetype</span><span class="p">:</span><span class="n">generate</span> <span class="o">-</span><span class="n">DgroupId</span><span class="o">=</span><span class="n">com</span><span class="o">.</span><span class="n">lendingclub</span><span class="o">.</span><span class="n">app</span> <span class="o">-</span><span class="n">DartifactId</span><span class="o">=</span><span class="n">lendingclub</span><span class="o">-</span><span class="n">app</span> <span class="o">-</span><span class="n">DarchetypeArtifactId</span><span class="o">=</span><span class="n">maven</span><span class="o">-</span><span class="n">archetype</span><span class="o">-</span><span class="n">quickstart</span> <span class="o">-</span><span class="n">DarchetypeVersion</span><span class="o">=</span><span class="mf">1.4</span>
+</pre></div>
+</div>
+<p>This command created the following directory and structures for me:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>lendingclub-app
+|-- pom.xml
+`-- src
+    |-- main
+    |   `-- java
+    |       `-- com
+    |           `-- lendingclub
+    |               `-- app
+    |                   `-- App.java
+    `-- test
+        `-- java
+            `-- com
+                `-- lendingclub
+                    `-- app
+                        `-- AppTest.java
+</pre></div>
+</div>
+<p>The next step is to edit the <code class="docutils literal notranslate"><span class="pre">pom</span></code> file.</p>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="intro.html" title="previous page">Real-time Scoring with H2O Models</a>
+    <a class='right-next' id="next-link" href="pom.html" title="next page"><span class="section-number">2. </span>POM File</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Greg Strabel<br/>
+        
+            &copy; Copyright 2020.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="_static/js/index.30270b6e4c972e43c488.js"></script>
+
+
+    
+  </body>
+</html>

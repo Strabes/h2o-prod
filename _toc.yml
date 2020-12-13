@@ -1,9 +1,0 @@
-- file: intro
-  numbered: true
-  sections:
-    - file: maven
-    - file: pom
-    - file: H2O_with_LendingClub
-    - file: java
-    - file: build_app
-    - file: Score_LendingClub
